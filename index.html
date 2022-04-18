@@ -20,21 +20,21 @@
         <button class="profile__btn-edit button-icon button-icon_type_edit" aria-label="Редакировать профиль"></button>
         <p class="profile__subtitle">Исследователь океана</p>
       </div>
-      <button class="profile__btn-add button-icon button-icon_type_add"></button>
+      <button class="profile__btn-add button-icon button-icon_type_add" aria-label="Добавить профиль"></button>
     </section>
     <div class="cards section">
       <div class="card">
         <img class="card__image" src="./images/blocks/cards/karachaevsk.jpg" alt="Карачаевск">
         <div class="card__info">
           <h2 class="card__title">Карачаевск</h2>
-          <button class="card__like button-icon button-icon_type_like"></button>
+          <button class="card__like button-icon button-icon_type_like-active" aria-label="Нравится"></button>
         </div>
       </div>
       <div class="card">
         <img class="card__image" src="./images/blocks/cards/elbrus.jpg" alt="Гора Эльбрус">
         <div class="card__info">
           <h2 class="card__title">Гора Эльбрус</h2>
-          <button class="card__like button-icon button-icon_type_like"></button>
+          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
       </div>
 
@@ -42,7 +42,7 @@
         <img class="card__image" src="./images/blocks/cards/dombai.jpg" alt="Домбай">
         <div class="card__info">
           <h2 class="card__title">Домбай</h2>
-          <button class="card__like button-icon button-icon_type_like"></button>
+          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
       </div>
 
@@ -50,7 +50,7 @@
         <img class="card__image" src="./images/blocks/cards/elbrus.jpg" alt="Гора Эльбрус">
         <div class="card__info">
           <h2 class="card__title">Гора Эльбрус</h2>
-          <button class="card__like button-icon button-icon_type_like"></button>
+          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
         <img class="card__image" src="./images/blocks/cards/dombai.jpg" alt="Домбай">
         <div class="card__info">
           <h2 class="card__title">Домбай</h2>
-          <button class="card__like button-icon button-icon_type_like"></button>
+          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
       </div>
 
@@ -66,7 +66,7 @@
         <img class="card__image" src="./images/blocks/cards/karachaevsk.jpg" alt="Карачаево-Черкеск">
         <div class="card__info">
           <h2 class="card__title">Карачаево-Черкеск</h2>
-          <button class="card__like button-icon button-icon_type_like"></button>
+          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
       </div>
     </div>
@@ -74,6 +74,8 @@
   <footer class="footer section">
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
+  <div class="popup js-profile popup_opened">
+  </div>
   <script src="./scripts/script.js"></script>
 </body>
 
