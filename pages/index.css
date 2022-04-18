@@ -20,6 +20,20 @@
 @import url("../blocks/header/__logo/header__logo.css");
 /*#endregion header*/
 
+/*#region button*/
+@import url("../blocks/button-icon/button-icon.css");
+@import url("../blocks/button-icon/_type/button-icon_type_add.css");
+@import url("../blocks/button-icon/_type/button-icon_type_edit.css");
+/*#endregion button*/
+
+/*#region profile*/
+@import url("../blocks/profile/profile.css");
+@import url("../blocks/profile/__avatar/profile__avatar.css");
+@import url("../blocks/profile/__info/profile__info.css");
+@import url("../blocks/profile/__title/profile__title.css");
+@import url("../blocks/profile/__subtitle/profile__subtitle.css");
+/*#endregion profile*/
+
 /*#region footer*/
 @import url("../blocks/footer/footer.css");
 @import url("../blocks/footer/__copyright/footer__copyright.css");

@@ -1,0 +1,9 @@
+.profile__info {
+  flex: 1;
+  display: grid;
+  grid-template: auto auto / auto 1fr;
+  align-self: center;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
