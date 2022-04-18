@@ -1,0 +1,9 @@
+.button-icon_type_like {
+  margin: 0;
+  padding: 0;
+  background-image: url("../../../images/blocks/cards/like.svg");
+  border: 0;
+  background-size: contain;
+  width: 24px;
+  height: 19px;
+}
