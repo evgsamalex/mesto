@@ -1,0 +1,13 @@
+.popup__container {
+  z-index: 10;
+  display: grid;
+  grid-template: auto auto / auto auto;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 475px) {
+  .popup__container {
+    width: 100%;
+    margin: 0 20px 20px;
+  }
+}

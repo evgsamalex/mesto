@@ -74,7 +74,24 @@
   <footer class="footer section">
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
-  <div class="popup js-profile popup_opened">
+  <div class="popup js-profile-popup">
+    <div class="popup__container">
+      <button type="button" class="popup__button-close button-icon button-icon_type_close"
+        area-label="Закрыть редактирование профиля"></button>
+      <div class="popup__content">
+        <form class="profile-form form" name="profile-form">
+          <h2 class="form__title">Редактирование профиля</h2>
+          <label class="form__field">
+            <input type="text" class="profile-form__name form__input" name="profile-input-name"
+              placeholder="Введите имя">
+          </label>
+          <label class="form__field">
+            <input type="text" class="profile-form__info form__input" name="profile-input-info" placeholder="О себе">
+          </label>
+          <button type="submit" class="profile-form__submit form__submit" name="profile-submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
   </div>
   <script src="./scripts/script.js"></script>
 </body>
