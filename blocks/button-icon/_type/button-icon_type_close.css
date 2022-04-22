@@ -3,4 +3,13 @@
   width: 40.7px;
   height: 40.7px;
   border-width: 0px;
+  background-size: cover;
+  padding: 0;
+}
+
+@media screen and (max-width: 425px) {
+  .button-icon_type_close {
+    width: 28px;
+    height: 28px;
+  }
 }

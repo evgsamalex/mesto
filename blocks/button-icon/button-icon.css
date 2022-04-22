@@ -6,10 +6,10 @@
   transition: opacity 0.3 ease;
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .button-icon:hover {
-  cursor: pointer;
   opacity: .6;
 }
 

@@ -1,6 +1,26 @@
-let profile = {
-  title: document.querySelector(".profile__title"),
-  subTitle: document.querySelector(".profile__subtitle"),
+const classes = {
+  profile: {
+    title: ".profile__title",
+    subTitle: ".profile__subtitle",
+    editButton: ".profile__btn-edit"
+  },
+  popup: {
+    opened: "popup_opened"
+  },
+  profilePopup: {
+    popup: ".js-profile-popup",
+    close: ".popup__button-close"
+  },
+  profileForm: {
+    form: ".profile-form",
+    nameInput: ".profile-form__name",
+    infoInput: ".profile-form__info",
+  }
+}
+
+const profile = {
+  title: document.querySelector(classes.profile.title),
+  subTitle: document.querySelector(classes.profile.subTitle),
   getTitle: function () {
     return this.title.textContent;
   },
@@ -15,48 +35,41 @@ let profile = {
   }
 }
 
-function ProfilePopup(className) {
-  this.popup = document.querySelector(className);
+const profilePopup = document.querySelector(classes.profilePopup.popup);
+const profileCloseButton = profilePopup.querySelector(classes.profilePopup.close);
 
-  let closeButton = this.popup.querySelector(".popup__button-close");
+const editButton = document.querySelector(classes.profile.editButton);
 
-  closeButton.addEventListener('click', () => this.close());
+const profileForm = document.querySelector(classes.profileForm.form);
+const nameInput = profileForm.querySelector(classes.profileForm.nameInput);
+const infoInput = profileForm.querySelector(classes.profileForm.infoInput);
 
-  this.show = () => this.popup.classList.add("popup_opened");
-
-  this.close = () => this.popup.classList.remove("popup_opened");
+function openPopup(popup) {
+  popup.classList.add(classes.popup.opened);
 }
 
-function ProfileForm(className) {
-  this.form = document.querySelector(className);
-  this.name = this.form.querySelector(".profile-form__name");
-  this.info = this.form.querySelector(".profile-form__info");
-  this.submit = this.form.querySelector(".profile-form__submit");
-  this.save = function (profile) {
-    profile.setTitle(this.name.value);
-    profile.setSubtitle(this.info.value);
-  };
+function closePopup(popup) {
+  popup.classList.remove(classes.popup.opened);
+}
 
-  this.load = function (profile) {
-    this.name.value = profile.getTitle();
-    this.info.value = profile.getSubtitle();
-  };
+function loadProfileForm() {
+  nameInput.value = profile.getTitle();
+  infoInput.value = profile.getSubtitle();
 }
 
 function initSubscriptions() {
-  let editButton = document.querySelector(".profile__btn-edit");
   editButton.addEventListener('click', () => {
-    profileForm.load(profile);
-    profilePopup.show();
+    loadProfileForm();
+    openPopup(profilePopup);
   });
 
-  let profileForm = new ProfileForm(".profile-form");
-  let profilePopup = new ProfilePopup(".js-profile-popup");
+  profileCloseButton.addEventListener('click', () => closePopup(profilePopup));
 
-  profileForm.form.addEventListener('submit', evt => {
+  profileForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    profileForm.save(profile);
-    profilePopup.close();
+    profile.setTitle(nameInput.value);
+    profile.setSubtitle(infoInput.value);
+    closePopup(profilePopup);
   });
 }
 

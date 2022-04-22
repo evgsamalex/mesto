@@ -11,5 +11,11 @@
 }
 
 .form__field:nth-child(3) {
-  margin-top: 32px;
+  margin-top: 30px;
+}
+
+@media screen and (max-width:425px) {
+  .form__field:nth-child(2) {
+    margin-top: 75px;
+  }
 }

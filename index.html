@@ -13,63 +13,65 @@
     <div class="header__logo"></div>
   </header>
   <main class="content section">
-    <section class="profile section">
+    <section class="profile">
       <img src="./images/blocks/profile/profile-avatar.jpg" class="profile__avatar" alt="Аватар">
       <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
-        <button class="profile__btn-edit button-icon button-icon_type_edit" aria-label="Редакировать профиль"></button>
+        <button class="profile__btn-edit button-icon button-icon_type_edit" aria-label="Редакировать профиль"
+          type="button"></button>
         <p class="profile__subtitle">Исследователь океана</p>
       </div>
-      <button class="profile__btn-add button-icon button-icon_type_add" aria-label="Добавить профиль"></button>
+      <button class="profile__btn-add button-icon button-icon_type_add" type="button"
+        aria-label="Добавить профиль"></button>
     </section>
-    <div class="cards section">
-      <div class="card">
+    <section class="cards">
+      <article class="card">
         <img class="card__image" src="./images/blocks/cards/karachaevsk.jpg" alt="Карачаевск">
         <div class="card__info">
           <h2 class="card__title">Карачаевск</h2>
           <button class="card__like button-icon button-icon_type_like-active" aria-label="Нравится"></button>
         </div>
-      </div>
-      <div class="card">
+      </article>
+      <article class="card">
         <img class="card__image" src="./images/blocks/cards/elbrus.jpg" alt="Гора Эльбрус">
         <div class="card__info">
           <h2 class="card__title">Гора Эльбрус</h2>
           <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/blocks/cards/dombai.jpg" alt="Домбай">
         <div class="card__info">
           <h2 class="card__title">Домбай</h2>
           <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/blocks/cards/elbrus.jpg" alt="Гора Эльбрус">
         <div class="card__info">
           <h2 class="card__title">Гора Эльбрус</h2>
           <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/blocks/cards/dombai.jpg" alt="Домбай">
         <div class="card__info">
           <h2 class="card__title">Домбай</h2>
           <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/blocks/cards/karachaevsk.jpg" alt="Карачаево-Черкеск">
         <div class="card__info">
           <h2 class="card__title">Карачаево-Черкеск</h2>
           <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   </main>
   <footer class="footer section">
     <p class="footer__copyright">© 2022 Mesto Russia</p>
@@ -80,7 +82,7 @@
         aria-label="Закрыть редактирование профиля"></button>
       <div class="popup__content">
         <form class="profile-form form" name="profile-form">
-          <h2 class="form__title">Редактирование профиля</h2>
+          <h2 class="form__title">Редактировать профиль</h2>
           <label class="form__field">
             <input type="text" class="profile-form__name form__input" name="profile-input-name"
               placeholder="Введите имя">
