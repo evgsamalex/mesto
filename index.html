@@ -21,56 +21,17 @@
           type="button"></button>
         <p class="profile__subtitle">Исследователь океана</p>
       </div>
-      <button class="profile__btn-add button-icon button-icon_type_add" type="button"
+      <button class="cards__btn-add button-icon button-icon_type_add" type="button"
         aria-label="Добавить профиль"></button>
     </section>
     <section class="cards">
-      <article class="card">
+      <!--<article class="card">
         <img class="card__image" src="./images/blocks/cards/karachaevsk.jpg" alt="Карачаевск">
         <div class="card__info">
           <h2 class="card__title">Карачаевск</h2>
           <button class="card__like button-icon button-icon_type_like-active" aria-label="Нравится"></button>
         </div>
-      </article>
-      <article class="card">
-        <img class="card__image" src="./images/blocks/cards/elbrus.jpg" alt="Гора Эльбрус">
-        <div class="card__info">
-          <h2 class="card__title">Гора Эльбрус</h2>
-          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img class="card__image" src="./images/blocks/cards/dombai.jpg" alt="Домбай">
-        <div class="card__info">
-          <h2 class="card__title">Домбай</h2>
-          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img class="card__image" src="./images/blocks/cards/elbrus.jpg" alt="Гора Эльбрус">
-        <div class="card__info">
-          <h2 class="card__title">Гора Эльбрус</h2>
-          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img class="card__image" src="./images/blocks/cards/dombai.jpg" alt="Домбай">
-        <div class="card__info">
-          <h2 class="card__title">Домбай</h2>
-          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img class="card__image" src="./images/blocks/cards/karachaevsk.jpg" alt="Карачаево-Черкеск">
-        <div class="card__info">
-          <h2 class="card__title">Карачаево-Черкеск</h2>
-          <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
-        </div>
-      </article>
+      </article>-->
     </section>
   </main>
   <footer class="footer section">
@@ -95,6 +56,47 @@
       </div>
     </div>
   </div>
+  <div class="popup js-card-add">
+    <div class="popup__container">
+      <button type="button" class="popup__button-close button-icon button-icon_type_close"
+        aria-label="Закрыть добавление карточки"></button>
+      <div class="popup__content">
+        <form class="card-form form" name="card-form">
+          <h2 class="form__title">Новое место</h2>
+          <label class="form__field">
+            <input type="text" class="card-form__name form__input" name="card-input-name" placeholder="Название">
+          </label>
+          <label class="form__field">
+            <input type="text" class="card-form__link form__input" name="card-input-link"
+              placeholder="Ссылка на картинку">
+          </label>
+          <button type="submit" class="card-form__submit form__submit" name="card-submit">Создать</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="popup popup_dark js-card-details">
+    <div class="popup__container popup__container_dark">
+      <button type="button" class="popup__button-close button-icon button-icon_type_close"
+        aria-label="Закрыть карточку"></button>
+      <div class="popup__content">
+        <figure class="figure">
+          <img class="figure__image" src="#" alt="#">
+          <figcaption class="figure__caption"></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+  <template id="card-template">
+    <article class="card">
+      <img class="card__image" src="#" alt="#">
+      <div class="card__info">
+        <h2 class="card__title"></h2>
+        <button class="card__like button-icon button-icon_type_like" aria-label="Нравится"></button>
+      </div>
+      <button class="card__delete button-icon button-icon_type_delete" aria-label="Удалить элемент"></button>
+    </article>
+  </template>
   <script src="./scripts/script.js"></script>
 </body>
 

@@ -3,9 +3,8 @@
   grid-column: 2;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 475px) {
   .popup__button-close {
-    grid-column: 1;
-    justify-self: flex-end;
+    align-self: flex-end;
   }
 }
