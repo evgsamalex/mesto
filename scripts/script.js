@@ -35,6 +35,7 @@ const classes = {
   },
   popup: {
     opened: "popup_opened",
+    container: ".popup__container",
     close: ".popup__button-close",
     profile: ".js-profile-popup",
     cardDetails: ".js-card-details",
@@ -92,7 +93,7 @@ const profile = {
   }
 }
 
-const profilePopup = createPopup(classes.popup.profile, classes.popup.close);
+const profilePopup = createPopup(classes.popup.profile);
 
 const editButton = document.querySelector(classes.profile.editButton);
 const addButton = document.querySelector(classes.card.create);
@@ -103,20 +104,29 @@ const infoInput = profileForm.querySelector(classes.profileForm.infoInput);
 
 const cardsContainer = document.querySelector(classes.cards);
 
-const cardDetailsPopup = createPopup(classes.popup.cardDetails, classes.popup.close);
+const cardDetailsPopup = createPopup(classes.popup.cardDetails);
 const cardDetailsImage = cardDetailsPopup.querySelector(classes.figure.image);
 const cardDetailsCaption = cardDetailsPopup.querySelector(classes.figure.caption);
 
-const addCardPopup = createPopup(classes.popup.addCard, classes.popup.close);
+const addCardPopup = createPopup(classes.popup.addCard);
 
 const cardForm = document.querySelector(classes.cardForm.form);
 const cardName = cardForm.querySelector(classes.cardForm.nameInput);
 const cardLink = cardForm.querySelector(classes.cardForm.linkInput);
 
-function createPopup(popupSelector, closePopupSelector) {
+function createPopup(popupSelector) {
   const popup = document.querySelector(popupSelector);
-  const closeButton = popup.querySelector(closePopupSelector);
+  const closeButton = popup.querySelector(classes.popup.close);
   closeButton.addEventListener('click', () => closePopup(popup));
+
+  const container = popup.querySelector(classes.popup.container);
+
+  popup.addEventListener('click', evt => {
+    if (evt.target === popup || evt.target === container) {
+      closePopup(popup);
+    }
+  })
+
   return popup;
 }
 
