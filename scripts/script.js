@@ -66,7 +66,7 @@ const classes = {
     active: "button-icon_type_like-active",
     delete: ".card__delete",
     templateId: "#card-template",
-    create: ".cards__btn-add"
+    create: ".profile__btn-add"
   },
   figure: {
     image: ".figure__image",
