@@ -1,80 +1,4 @@
-//#region data
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-const classes = {
-  profile: {
-    title: ".profile__title",
-    subTitle: ".profile__subtitle",
-    editButton: ".profile__btn-edit"
-  },
-  popup: {
-    opened: "popup_opened",
-    container: ".popup__container",
-    close: ".popup__button-close",
-    profile: ".js-profile-popup",
-    cardDetails: ".js-card-details",
-    addCard: ".js-card-add",
-  },
-  cardDetailsPopup: {
-    popup: ""
-  },
-  form: {
-    input: ".form__input"
-  },
-  profileForm: {
-    form: ".profile-form",
-    nameInput: ".profile-form__name",
-    infoInput: ".profile-form__info",
-  },
-  cardForm: {
-    form: ".card-form",
-    nameInput: ".card-form__name",
-    linkInput: ".card-form__link"
-  },
-  cards: ".cards",
-  card: {
-    image: ".card__image",
-    info: "card__info",
-    title: ".card__title",
-    like: ".card__like",
-    active: "button-icon_type_like-active",
-    delete: ".card__delete",
-    templateId: "#card-template",
-    create: ".profile__btn-add"
-  },
-  figure: {
-    image: ".figure__image",
-    caption: ".figure__caption"
-  }
-}
-
-//#endregion
+import { initialCards, classes } from "./constants.js";
 
 const profile = {
   title: document.querySelector(classes.profile.title),
@@ -95,8 +19,8 @@ const profile = {
 
 const profilePopup = createPopup(classes.popup.profile);
 
-const editButton = document.querySelector(classes.profile.editButton);
-const addButton = document.querySelector(classes.card.create);
+const buttonEdit = document.querySelector(classes.profile.editButton);
+const buttonAdd = document.querySelector(classes.card.create);
 
 const profileForm = document.querySelector(classes.profileForm.form);
 const nameInput = profileForm.querySelector(classes.profileForm.nameInput);
@@ -108,21 +32,23 @@ const cardDetailsPopup = createPopup(classes.popup.cardDetails);
 const cardDetailsImage = cardDetailsPopup.querySelector(classes.figure.image);
 const cardDetailsCaption = cardDetailsPopup.querySelector(classes.figure.caption);
 
-const addCardPopup = createPopup(classes.popup.addCard);
+const cardPopupAdd = createPopup(classes.popup.addCard);
 
 const cardForm = document.querySelector(classes.cardForm.form);
 const cardName = cardForm.querySelector(classes.cardForm.nameInput);
 const cardLink = cardForm.querySelector(classes.cardForm.linkInput);
 
+const cardTemplate = document.querySelector(classes.card.templateId).content;
+
 function createPopup(popupSelector) {
   const popup = document.querySelector(popupSelector);
-  const closeButton = popup.querySelector(classes.popup.close);
-  closeButton.addEventListener('click', () => closePopup(popup));
+  //const buttonClose = popup.querySelector(classes.popup.close);
+  //buttonClose.addEventListener('click', () => closePopup(popup));
 
   const container = popup.querySelector(classes.popup.container);
 
-  popup.addEventListener('click', evt => {
-    if (evt.target === popup || evt.target === container) {
+  popup.addEventListener('mousedown', evt => {
+    if (evt.target === popup || evt.target === container || evt.target.classList.contains(classes.popup.close)) {
       closePopup(popup);
     }
   })
@@ -143,14 +69,14 @@ function loadProfileForm() {
   infoInput.value = profile.getSubtitle();
 }
 
-function clearForm(form) {
-  form.querySelectorAll(classes.form.input).forEach(input => {
-    input.value = '';
-  })
+function fillCardDetails(data) {
+  cardDetailsImage.src = data.link;
+  cardDetailsImage.alt = data.name;
+  cardDetailsCaption.textContent = data.name;
 }
 
 function initSubscriptions() {
-  editButton.addEventListener('click', () => {
+  buttonEdit.addEventListener('click', () => {
     loadProfileForm();
     openPopup(profilePopup);
   });
@@ -162,16 +88,16 @@ function initSubscriptions() {
     closePopup(profilePopup);
   });
 
-  addButton.addEventListener('click', () => {
-    clearForm(cardForm);
-    openPopup(addCardPopup);
+  buttonAdd.addEventListener('click', () => {
+    cardForm.reset();
+    openPopup(cardPopupAdd);
   });
 
   cardForm.addEventListener('submit', evt => {
     evt.preventDefault();
     const card = renderCard({ name: cardName.value, link: cardLink.value });
     cardsContainer.prepend(card);
-    closePopup(addCardPopup);
+    closePopup(cardPopupAdd);
   })
 }
 
@@ -183,7 +109,7 @@ function renderCards() {
 }
 
 function renderCard(data) {
-  const card = document.querySelector(classes.card.templateId).content.cloneNode(true);
+  const card = cardTemplate.cloneNode(true);
   const image = card.querySelector(classes.card.image);
   const title = card.querySelector(classes.card.title);
   const like = card.querySelector(classes.card.like);
@@ -192,10 +118,8 @@ function renderCard(data) {
   image.src = data.link;
   image.alt = data.name;
 
-  image.addEventListener('click', (evt) => {
-    cardDetailsImage.src = data.link;
-    cardDetailsImage.alt = data.name;
-    cardDetailsCaption.textContent = data.name;
+  image.addEventListener('click', () => {
+    fillCardDetails(data);
     openPopup(cardDetailsPopup);
   })
 
