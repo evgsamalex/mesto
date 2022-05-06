@@ -1,9 +1,4 @@
-@media screen and (max-width: 475px) {
-  .popup__container_dark {
-    width: 100%;
-    row-gap: 8px;
-    display: flex;
-    flex-direction: column;
-    max-width: 75vw;
-  }
+.popup__container_dark {
+  max-width: 75vw;
+  width: auto;
 }
