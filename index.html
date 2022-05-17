@@ -38,11 +38,14 @@
         <form class="profile-form form" name="profile-form">
           <h2 class="form__title">Редактировать профиль</h2>
           <label class="form__field">
-            <input type="text" class="profile-form__name form__input" name="profile-input-name"
-              placeholder="Введите имя">
+            <input type="text" class="profile-form__name form__input" name="name" placeholder="Введите имя" required
+              minlength="2" maxlength="40" id="name">
+            <span class="form__input-error" id="name-error"></span>
           </label>
           <label class="form__field">
-            <input type="text" class="profile-form__info form__input" name="profile-input-info" placeholder="О себе">
+            <input type="text" class="profile-form__info form__input" name="info" placeholder="О себе" required
+              minlength="2" maxlength="200" id="info">
+            <span class="form__input-error" id="info-error"></span>
           </label>
           <button type="submit" class="profile-form__submit form__submit" name="profile-submit">Сохранить</button>
         </form>
@@ -57,11 +60,14 @@
         <form class="card-form form" name="card-form">
           <h2 class="form__title">Новое место</h2>
           <label class="form__field">
-            <input type="text" class="card-form__name form__input" name="card-input-name" placeholder="Название">
+            <input type="text" class="card-form__name form__input" name="name" placeholder="Название" required
+              minlength="2" maxlength="30" id="name">
+            <span class="form__input-error" id="name-error"></span>
           </label>
           <label class="form__field">
-            <input type="text" class="card-form__link form__input" name="card-input-link"
-              placeholder="Ссылка на картинку">
+            <input type="url" class="card-form__link form__input" name="link" id="link" placeholder="Ссылка на картинку"
+              required>
+            <span class="form__input-error" id="link-error" id="link-error"></span>
           </label>
           <button type="submit" class="card-form__submit form__submit" name="card-submit">Создать</button>
         </form>
@@ -90,6 +96,7 @@
       <button class="card__delete button-icon button-icon_type_delete" aria-label="Удалить элемент"></button>
     </article>
   </template>
+  <script src="./scripts/validation.js" type="module"></script>
   <script src="./scripts/script.js" type="module"></script>
 </body>
 

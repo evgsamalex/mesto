@@ -1,4 +1,4 @@
-import { initialCards, classes } from "./constants.js";
+import { initialCards, classes, validation } from "./constants.js";
 
 const profile = {
   title: document.querySelector(classes.profile.title),
@@ -56,12 +56,21 @@ function createPopup(popupSelector) {
   return popup;
 }
 
+const keyHandler = (evt) => {
+  if (evt.key === 'Escape' && keyHandler.popup) {
+    closePopup(keyHandler.popup);
+  }
+}
+
 function openPopup(popup) {
   popup.classList.add(classes.popup.opened);
+  keyHandler.popup = popup;
+  document.addEventListener('keyup', keyHandler);
 }
 
 function closePopup(popup) {
   popup.classList.remove(classes.popup.opened);
+  document.removeEventListener('keyup', keyHandler);
 }
 
 function loadProfileForm() {
@@ -75,9 +84,15 @@ function fillCardDetails(data) {
   cardDetailsCaption.textContent = data.name;
 }
 
+function raiseOpenForm(form) {
+  const event = new CustomEvent(validation.onOpen);
+  form.dispatchEvent(event);
+}
+
 function initSubscriptions() {
   buttonEdit.addEventListener('click', () => {
     loadProfileForm();
+    raiseOpenForm(profileForm);
     openPopup(profilePopup);
   });
 

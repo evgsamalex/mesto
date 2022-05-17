@@ -43,7 +43,7 @@ export const classes = {
     popup: ""
   },
   form: {
-    input: ".form__input"
+    input: ".form__input",
   },
   profileForm: {
     form: ".profile-form",
@@ -69,5 +69,15 @@ export const classes = {
   figure: {
     image: ".figure__image",
     caption: ".figure__caption"
-  }
+  },
+}
+
+export const validation = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit",
+  inactiveButtonClass: "form__submit_inactive",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active",
+  onOpen: "openEvent",
 }
