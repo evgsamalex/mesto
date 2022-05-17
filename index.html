@@ -38,14 +38,14 @@
         <form class="profile-form form" name="profile-form">
           <h2 class="form__title">Редактировать профиль</h2>
           <label class="form__field">
-            <input type="text" class="profile-form__name form__input" name="name" placeholder="Введите имя" required
-              minlength="2" maxlength="40" id="name">
-            <span class="form__input-error" id="name-error"></span>
+            <input type="text" class="profile-form__name form__input" name="profile-form-name" placeholder="Введите имя"
+              required minlength="2" maxlength="40" id="profile-form-name">
+            <span class="form__input-error" id="profile-form-name-error"></span>
           </label>
           <label class="form__field">
             <input type="text" class="profile-form__info form__input" name="info" placeholder="О себе" required
-              minlength="2" maxlength="200" id="info">
-            <span class="form__input-error" id="info-error"></span>
+              minlength="2" maxlength="200" id="profile-form-info">
+            <span class="form__input-error" id="profile-form-info-error"></span>
           </label>
           <button type="submit" class="profile-form__submit form__submit" name="profile-submit">Сохранить</button>
         </form>
@@ -60,14 +60,14 @@
         <form class="card-form form" name="card-form">
           <h2 class="form__title">Новое место</h2>
           <label class="form__field">
-            <input type="text" class="card-form__name form__input" name="name" placeholder="Название" required
-              minlength="2" maxlength="30" id="name">
-            <span class="form__input-error" id="name-error"></span>
+            <input type="text" class="card-form__name form__input" name="card-form-name" placeholder="Название" required
+              minlength="2" maxlength="30" id="card-form-name">
+            <span class="form__input-error" id="card-form-name-error"></span>
           </label>
           <label class="form__field">
-            <input type="url" class="card-form__link form__input" name="link" id="link" placeholder="Ссылка на картинку"
-              required>
-            <span class="form__input-error" id="link-error" id="link-error"></span>
+            <input type="url" class="card-form__link form__input" name="card-form-link" id="card-form-link"
+              placeholder="Ссылка на картинку" required>
+            <span class="form__input-error" id="card-form-link-error"></span>
           </label>
           <button type="submit" class="card-form__submit form__submit" name="card-submit">Создать</button>
         </form>
