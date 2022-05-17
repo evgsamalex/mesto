@@ -105,6 +105,7 @@ function initSubscriptions() {
 
   buttonAdd.addEventListener('click', () => {
     cardForm.reset();
+    raiseOpenForm(cardForm);
     openPopup(cardPopupAdd);
   });
 
