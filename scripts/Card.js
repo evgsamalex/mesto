@@ -1,48 +1,57 @@
 export default class Card {
-  constructor(data, config) {
+  constructor(data, config, openHandler) {
     this._name = data.name;
     this._link = data.link;
     this._config = config;
+    this._openHandler = openHandler;
   }
 
   _getTemplate() {
-    const template = document.querySelector(this._config.templateId).content;
+    const template = document.querySelector(this._config.templateId).content.querySelector(this._config.card);
     return template.cloneNode(true);
   }
 
-  generateCard(openHandler) {
-    this._template = this._getTemplate();
-    this._openHandler = openHandler;
+  generateCard() {
+    this._element = this._getTemplate();
+    this._image = this._element.querySelector(this._config.image);
+    this._title = this._element.querySelector(this._config.title);
+    this._like = this._element.querySelector(this._config.like);
+    this._delete = this._element.querySelector(this._config.delete);
     this._fillElements();
     this._initSubscribtions();
-    return this._template;
+    return this._element;
   }
 
   _fillElements() {
-    const image = this._template.querySelector(this._config.image);
-    const title = this._template.querySelector(this._config.title);
-
-    image.src = this._link;
-    image.alt = this._name;
-    title.textContent = this._name;
+    this._image.src = this._link;
+    this._image.alt = this._name;
+    this._title.textContent = this._name;
   }
 
   _initSubscribtions() {
-    this._template.querySelector(this._config.like).addEventListener('click', (evt) => this._handleLike(evt))
-    this._template.querySelector(this._config.delete).addEventListener('click', evt => { this._handleDelete(evt) })
-    this._template.querySelector(this._config.image).addEventListener('click', () => { this._handleOpen() })
+    this._like.addEventListener('click', () => this._handleLike())
+    this._delete.addEventListener('click', () => { this._handleDelete() })
+    this._image.addEventListener('click', () => { this._handleOpen() })
   }
 
-  _handleLike(evt) {
-    evt.target.classList.toggle(this._config.active);
+  _handleLike() {
+    this._like.classList.toggle(this._config.active);
   }
 
-  _handleDelete(evt) {
-    evt.target.closest(".card").remove();
+  _handleDelete() {
+    this._element.remove();
+    this._dispose();
   }
 
   _handleOpen() {
     this._openHandler({ name: this._name, link: this._link });
   }
 
+  _dispose() {
+    this._element = null;
+    this._image = null;
+    this._title = null;
+    this._like = null;
+    this._delete = null;
+  }
 }

@@ -19,7 +19,7 @@ export default class FormValidator {
 
   _setEventListeners() {
     this._form.addEventListener(this._config.onOpen, () => {
-      this._toggleButtonState();
+      this._resetError();
     })
 
     this._toggleButtonState();
@@ -73,5 +73,12 @@ export default class FormValidator {
       this._button.classList.remove(this._config.inactiveButtonClass);
       this._button.disabled = false;
     }
+  }
+
+  _resetError() {
+    this._toggleButtonState();
+    this._inputList.forEach(input => {
+      this._hideInputError(input);
+    })
   }
 }

@@ -25,6 +25,7 @@ const buttonEdit = document.querySelector(classes.profile.editButton);
 const buttonAdd = document.querySelector(classes.card.create);
 
 const profileForm = document.querySelector(classes.profileForm.form);
+const profileFormValidator = new FormValidator(validation, profileForm);
 const nameInput = profileForm.querySelector(classes.profileForm.nameInput);
 const infoInput = profileForm.querySelector(classes.profileForm.infoInput);
 
@@ -37,6 +38,7 @@ const cardDetailsCaption = cardDetailsPopup.querySelector(classes.figure.caption
 const cardPopupAdd = createPopup(classes.popup.addCard);
 
 const cardForm = document.querySelector(classes.cardForm.form);
+const cardFormValidator = new FormValidator(validation, cardForm)
 const cardName = cardForm.querySelector(classes.cardForm.nameInput);
 const cardLink = cardForm.querySelector(classes.cardForm.linkInput);
 
@@ -91,6 +93,11 @@ const openCardHandler = (data) => {
   openPopup(cardDetailsPopup);
 }
 
+const createCard = (data) => {
+  const card = new Card(data, classes.card, openCardHandler);
+  return card.generateCard();
+}
+
 function initSubscriptions() {
   buttonEdit.addEventListener('click', () => {
     loadProfileForm();
@@ -113,27 +120,20 @@ function initSubscriptions() {
 
   cardForm.addEventListener('submit', evt => {
     evt.preventDefault();
-    const card = new Card({ name: cardName.value, link: cardLink.value }, classes.card);
-    cardsContainer.prepend(card.generateCard(openCardHandler));
+    cardsContainer.prepend(createCard({ name: cardName.value, link: cardLink.value }));
     closePopup(cardPopupAdd);
   })
 }
 
 function renderCards() {
   initialCards.forEach(data => {
-    const card = new Card(data, classes.card);
-    cardsContainer.append(card.generateCard(openCardHandler));
+    cardsContainer.append(createCard(data));
   })
 }
 
-function enableValidation() {
-  [profileForm, cardForm].forEach(form => {
-    const validator = new FormValidator(validation, form);
-    validator.enableValidation();
-  })
-}
 
-enableValidation();
+profileFormValidator.enableValidation();
+cardFormValidator.enableValidation();
 
 initSubscriptions();
 

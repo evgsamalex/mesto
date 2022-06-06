@@ -57,6 +57,7 @@ export const classes = {
   },
   cards: ".cards",
   card: {
+    card: ".card",
     image: ".card__image",
     info: "card__info",
     title: ".card__title",
