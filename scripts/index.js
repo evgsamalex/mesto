@@ -1,4 +1,6 @@
 import { initialCards, classes, validation } from "./constants.js";
+import Card from "./card.js";
+import FormValidator from "./FormValidator.js";
 
 const profile = {
   title: document.querySelector(classes.profile.title),
@@ -38,13 +40,8 @@ const cardForm = document.querySelector(classes.cardForm.form);
 const cardName = cardForm.querySelector(classes.cardForm.nameInput);
 const cardLink = cardForm.querySelector(classes.cardForm.linkInput);
 
-const cardTemplate = document.querySelector(classes.card.templateId).content;
-
 function createPopup(popupSelector) {
   const popup = document.querySelector(popupSelector);
-  //const buttonClose = popup.querySelector(classes.popup.close);
-  //buttonClose.addEventListener('click', () => closePopup(popup));
-
   const container = popup.querySelector(classes.popup.container);
 
   popup.addEventListener('mousedown', evt => {
@@ -89,6 +86,11 @@ function raiseOpenForm(form) {
   form.dispatchEvent(event);
 }
 
+const openCardHandler = (data) => {
+  fillCardDetails(data);
+  openPopup(cardDetailsPopup);
+}
+
 function initSubscriptions() {
   buttonEdit.addEventListener('click', () => {
     loadProfileForm();
@@ -111,46 +113,27 @@ function initSubscriptions() {
 
   cardForm.addEventListener('submit', evt => {
     evt.preventDefault();
-    const card = renderCard({ name: cardName.value, link: cardLink.value });
-    cardsContainer.prepend(card);
+    const card = new Card({ name: cardName.value, link: cardLink.value }, classes.card);
+    cardsContainer.prepend(card.generateCard(openCardHandler));
     closePopup(cardPopupAdd);
   })
 }
 
 function renderCards() {
   initialCards.forEach(data => {
-    const card = renderCard(data);
-    cardsContainer.append(card);
+    const card = new Card(data, classes.card);
+    cardsContainer.append(card.generateCard(openCardHandler));
   })
 }
 
-function renderCard(data) {
-  const card = cardTemplate.cloneNode(true);
-  const image = card.querySelector(classes.card.image);
-  const title = card.querySelector(classes.card.title);
-  const like = card.querySelector(classes.card.like);
-  const deleteButton = card.querySelector(classes.card.delete);
-
-  image.src = data.link;
-  image.alt = data.name;
-
-  image.addEventListener('click', () => {
-    fillCardDetails(data);
-    openPopup(cardDetailsPopup);
+function enableValidation() {
+  [profileForm, cardForm].forEach(form => {
+    const validator = new FormValidator(validation, form);
+    validator.enableValidation();
   })
-
-  title.textContent = data.name;
-
-  like.addEventListener('click', (evt) => {
-    evt.target.classList.toggle(classes.card.active);
-  })
-
-  deleteButton.addEventListener('click', evt => {
-    evt.target.closest(".card").remove();
-  })
-
-  return card;
 }
+
+enableValidation();
 
 initSubscriptions();
 
