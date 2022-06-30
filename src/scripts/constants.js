@@ -27,8 +27,8 @@ export const initialCards = [
 
 export const classes = {
   profile: {
-    title: ".profile__title",
-    subTitle: ".profile__subtitle",
+    titleSelector: ".profile__title",
+    subTitleSelector: ".profile__subtitle",
     editButton: ".profile__btn-edit"
   },
   popup: {

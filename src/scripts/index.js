@@ -1,23 +1,12 @@
+import '../pages/index.css';
 import { initialCards, classes, validation } from "./constants.js";
 import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
+import Section from './Section.js';
+import UserInfo from './UserInfo.js';
 
-const profile = {
-  title: document.querySelector(classes.profile.title),
-  subTitle: document.querySelector(classes.profile.subTitle),
-  getTitle: function () {
-    return this.title.textContent;
-  },
-  setTitle: function (value) {
-    this.title.textContent = value;
-  },
-  getSubtitle: function () {
-    return this.subTitle.textContent;
-  },
-  setSubtitle: function (value) {
-    this.subTitle.textContent = value;
-  }
-}
+
+const userInfo = new UserInfo(classes.profile);
 
 const profilePopup = createPopup(classes.popup.profile);
 
@@ -28,8 +17,6 @@ const profileForm = document.querySelector(classes.profileForm.form);
 const profileFormValidator = new FormValidator(validation, profileForm);
 const nameInput = profileForm.querySelector(classes.profileForm.nameInput);
 const infoInput = profileForm.querySelector(classes.profileForm.infoInput);
-
-const cardsContainer = document.querySelector(classes.cards);
 
 const cardDetailsPopup = createPopup(classes.popup.cardDetails);
 const cardDetailsImage = cardDetailsPopup.querySelector(classes.figure.image);
@@ -73,8 +60,9 @@ function closePopup(popup) {
 }
 
 function loadProfileForm() {
-  nameInput.value = profile.getTitle();
-  infoInput.value = profile.getSubtitle();
+  const info = userInfo.getUserInfo();
+  nameInput.value = info.title;
+  infoInput.value = info.subtitle;
 }
 
 function fillCardDetails(data) {
@@ -88,15 +76,19 @@ function raiseOpenForm(form) {
   form.dispatchEvent(event);
 }
 
-const openCardHandler = (data) => {
-  fillCardDetails(data);
-  openPopup(cardDetailsPopup);
-}
-
-const createCard = (data) => {
-  const card = new Card(data, classes.card, openCardHandler);
-  return card.generateCard();
-}
+const cardsSection = new Section(
+  {
+    items: initialCards,
+    renderer: (data) => {
+      const card = new Card(data, classes.card,
+        (data) => {
+          fillCardDetails(data);
+          openPopup(cardDetailsPopup);
+        });
+      return card.generateCard();
+    }
+  },
+  classes.cards);
 
 function initSubscriptions() {
   buttonEdit.addEventListener('click', () => {
@@ -107,8 +99,7 @@ function initSubscriptions() {
 
   profileForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    profile.setTitle(nameInput.value);
-    profile.setSubtitle(infoInput.value);
+    userInfo.setUserInfo({ title: nameInput.value, subtitle: infoInput.value });
     closePopup(profilePopup);
   });
 
@@ -120,21 +111,18 @@ function initSubscriptions() {
 
   cardForm.addEventListener('submit', evt => {
     evt.preventDefault();
-    cardsContainer.prepend(createCard({ name: cardName.value, link: cardLink.value }));
+    cardsSection.addItem({ name: cardName.value, link: cardLink.value });
     closePopup(cardPopupAdd);
   })
 }
-
-function renderCards() {
-  initialCards.forEach(data => {
-    cardsContainer.append(createCard(data));
-  })
-}
-
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
 initSubscriptions();
 
-renderCards();
+
+
+cardsSection.renderItems();
+
+//renderCards();
