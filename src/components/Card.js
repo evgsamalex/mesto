@@ -1,5 +1,5 @@
 
-import { cardConfig } from "./constants";
+import { cardConfig } from "../utils/constants";
 export default class Card {
   constructor(data, handleCardClick) {
     this._name = data.name;
@@ -31,8 +31,8 @@ export default class Card {
 
   _initSubscribtions() {
     this._like.addEventListener('click', () => this._handleLike())
-    this._delete.addEventListener('click', () => { this._handleDelete() })
-    this._image.addEventListener('click', () => { this._handleOpen() })
+    this._delete.addEventListener('click', () => this._handleDelete())
+    this._image.addEventListener('click', () => this._handleOpen())
   }
 
   _handleLike() {

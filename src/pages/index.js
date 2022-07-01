@@ -1,11 +1,11 @@
 import '../pages/index.css';
-import { initialCards, validation, popups, forms, pageConfig } from "./constants";
-import Card from "./card";
-import FormValidator from "./FormValidator";
-import Section from './Section';
-import UserInfo from './UserInfo';
-import PopupWithImage from './PopupWithImage';
-import PopupWithForm from './PopupWithForm';
+import { initialCards, validation, popups, forms, pageConfig } from "../utils/constants";
+import Card from '../components/Card';
+import FormValidator from '../components/FormValidator';
+import Section from '../components/Section';
+import UserInfo from '../components/UserInfo';
+import PopupWithImage from '../components/PopupWithImage';
+import PopupWithForm from '../components/PopupWithForm';
 
 
 const userInfo = new UserInfo();

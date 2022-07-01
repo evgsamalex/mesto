@@ -1,4 +1,4 @@
-import { profileConfig } from "./constants";
+import { profileConfig } from "../utils/constants";
 export default class UserInfo {
   constructor() {
     this._title = document.querySelector(profileConfig.titleSelector);
