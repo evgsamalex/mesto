@@ -18,7 +18,7 @@ export default class FormValidator {
   }
 
   _setEventListeners() {
-    this._form.addEventListener(this._config.onOpen, () => {
+    this._form.addEventListener(this._config.onOpenEvent, () => {
       this._resetError();
     })
 

@@ -1,5 +1,6 @@
+import { popupConfig as config } from "./constants";
 export default class Popup {
-  constructor(selector, config) {
+  constructor(selector) {
     this._popup = document.querySelector(selector);
     this._container = this._popup.querySelector(config.containerSelector);
     this._openModifier = config.openModifier;

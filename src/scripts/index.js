@@ -1,114 +1,59 @@
 import '../pages/index.css';
-import { initialCards, classes, validation } from "./constants.js";
-import * as constants from "./constants.js";
-import Card from "./card.js";
-import FormValidator from "./FormValidator.js";
-import Section from './Section.js';
-import UserInfo from './UserInfo.js';
+import { initialCards, validation, popups, forms, pageConfig } from "./constants";
+import Card from "./card";
+import FormValidator from "./FormValidator";
+import Section from './Section';
+import UserInfo from './UserInfo';
 import PopupWithImage from './PopupWithImage';
+import PopupWithForm from './PopupWithForm';
 
 
-const userInfo = new UserInfo(classes.profile);
+const userInfo = new UserInfo();
 
-const profilePopup = createPopup(classes.popup.profile);
+const profileFormValidator = new FormValidator(validation, document.querySelector(forms.profileForm));
+const cardFormValidator = new FormValidator(validation, document.querySelector(forms.cardForm))
 
-const buttonEdit = document.querySelector(classes.profile.editButton);
-const buttonAdd = document.querySelector(classes.card.create);
-
-const profileForm = document.querySelector(classes.profileForm.form);
-const profileFormValidator = new FormValidator(validation, profileForm);
-const nameInput = profileForm.querySelector(classes.profileForm.nameInput);
-const infoInput = profileForm.querySelector(classes.profileForm.infoInput);
-
-const cardPopupAdd = createPopup(classes.popup.addCard);
-
-const cardForm = document.querySelector(classes.cardForm.form);
-const cardFormValidator = new FormValidator(validation, cardForm)
-const cardName = cardForm.querySelector(classes.cardForm.nameInput);
-const cardLink = cardForm.querySelector(classes.cardForm.linkInput);
-
-function createPopup(popupSelector) {
-  const popup = document.querySelector(popupSelector);
-  const container = popup.querySelector(classes.popup.container);
-
-  popup.addEventListener('mousedown', evt => {
-    if (evt.target === popup || evt.target === container || evt.target.classList.contains(classes.popup.close)) {
-      closePopup(popup);
-    }
-  })
-
-  return popup;
-}
-
-function openPopup(popup) {
-  popup.classList.add(classes.popup.opened);
-  keyHandler.popup = popup;
-  document.addEventListener('keyup', keyHandler);
-}
-
-function closePopup(popup) {
-  popup.classList.remove(classes.popup.opened);
-  document.removeEventListener('keyup', keyHandler);
-}
-
-function loadProfileForm() {
-  const info = userInfo.getUserInfo();
-  nameInput.value = info.title;
-  infoInput.value = info.subtitle;
-}
-
-function raiseOpenForm(form) {
-  const event = new CustomEvent(validation.onOpen);
-  form.dispatchEvent(event);
-}
-
-const cardPopup = new PopupWithImage(constants.popupsConfig.cardDetails, constants);
+const cardPopup = new PopupWithImage(popups.cardDetails);
 cardPopup.setEventListeners();
+
+const profilePopup = new PopupWithForm(popups.profile, ([title, subtitle]) => {
+  userInfo.setUserInfo({ title, subtitle });
+  profilePopup.close();
+});
+profilePopup.setEventListeners();
+
+const addCardPopup = new PopupWithForm(popups.addCard, ([name, link]) => {
+  cardsSection.addItem({ name, link });
+  addCardPopup.close();
+});
+addCardPopup.setEventListeners();
 
 const cardsSection = new Section(
   {
     items: initialCards,
     renderer: (data) => {
-      const card = new Card(data, classes.card,
-        (data) => cardPopup.open(data));
+      const card = new Card(data, (data) => cardPopup.open(data));
       return card.generateCard();
     }
   },
-  classes.cards);
+  pageConfig.cardsSelector);
 
-function initSubscriptions() {
+const initSubscriptions = () => {
+  const buttonEdit = document.querySelector(pageConfig.buttonEditSelector);
   buttonEdit.addEventListener('click', () => {
-    loadProfileForm();
-    raiseOpenForm(profileForm);
-    openPopup(profilePopup);
+    profilePopup.fillForm(userInfo.getUserInfo());
+    profilePopup.open();
   });
 
-  profileForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    userInfo.setUserInfo({ title: nameInput.value, subtitle: infoInput.value });
-    closePopup(profilePopup);
-  });
-
+  const buttonAdd = document.querySelector(pageConfig.buttonAddSelector);
   buttonAdd.addEventListener('click', () => {
-    cardForm.reset();
-    raiseOpenForm(cardForm);
-    openPopup(cardPopupAdd);
+    addCardPopup.open();
   });
 
-  cardForm.addEventListener('submit', evt => {
-    evt.preventDefault();
-    cardsSection.addItem({ name: cardName.value, link: cardLink.value });
-    closePopup(cardPopupAdd);
-  })
+  profileFormValidator.enableValidation();
+  cardFormValidator.enableValidation();
 }
-
-profileFormValidator.enableValidation();
-cardFormValidator.enableValidation();
 
 initSubscriptions();
 
-
-
 cardsSection.renderItems();
-
-//renderCards();

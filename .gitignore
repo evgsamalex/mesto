@@ -2,3 +2,4 @@
 /*.code-workspace
 /.editorconfig
 node_modules
+dist

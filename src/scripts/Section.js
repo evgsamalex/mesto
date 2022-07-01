@@ -6,7 +6,6 @@ export default class Section {
   }
 
   renderItems() {
-    console.log(this._renderer);
     this._items.forEach(item => {
       this._container.append(this._renderer(item));
     });

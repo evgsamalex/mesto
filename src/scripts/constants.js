@@ -25,52 +25,21 @@ export const initialCards = [
   }
 ];
 
-export const classes = {
-  profile: {
-    titleSelector: ".profile__title",
-    subTitleSelector: ".profile__subtitle",
-    editButton: ".profile__btn-edit"
-  },
-  popup: {
-    opened: "popup_opened",
-    container: ".popup__container",
-    close: "popup__button-close",
-    profile: ".js-profile-popup",
-    cardDetails: ".js-card-details",
-    addCard: ".js-card-add",
-  },
-  cardDetailsPopup: {
-    popup: ""
-  },
-  form: {
-    input: ".form__input",
-  },
-  profileForm: {
-    form: ".profile-form",
-    nameInput: ".profile-form__name",
-    infoInput: ".profile-form__info",
-  },
-  cardForm: {
-    form: ".card-form",
-    nameInput: ".card-form__name",
-    linkInput: ".card-form__link"
-  },
-  cards: ".cards",
-  card: {
-    card: ".card",
-    image: ".card__image",
-    info: "card__info",
-    title: ".card__title",
-    like: ".card__like",
-    active: "button-icon_type_like-active",
-    delete: ".card__delete",
-    templateId: "#card-template",
-    create: ".profile__btn-add"
-  },
-  figure: {
-    image: ".figure__image",
-    caption: ".figure__caption"
-  },
+export const pageConfig = {
+  buttonAddSelector: ".profile__btn-add",
+  buttonEditSelector: ".profile__btn-edit",
+  cardsSelector: ".cards"
+}
+
+export const cardConfig = {
+  card: ".card",
+  image: ".card__image",
+  info: "card__info",
+  title: ".card__title",
+  like: ".card__like",
+  active: "button-icon_type_like-active",
+  delete: ".card__delete",
+  templateId: "#card-template",
 }
 
 export const validation = {
@@ -80,7 +49,7 @@ export const validation = {
   inactiveButtonClass: "form__submit_inactive",
   inputErrorClass: "form__input_type_error",
   errorClass: "form__input-error_active",
-  onOpen: "openEvent",
+  onOpenEvent: "openEvent",
 }
 
 export const popupConfig = {
@@ -89,13 +58,30 @@ export const popupConfig = {
   buttonCloseClass: "popup__button-close",
 }
 
-export const popupsConfig = {
+export const popups = {
   profile: ".js-profile-popup",
   cardDetails: ".js-card-details",
   addCard: ".js-card-add",
 }
 
+export const forms = {
+  profileForm: ".profile-form",
+  cardForm: ".card-form"
+}
+
 export const imageConfig = {
   imageSelector: ".figure__image",
   captionSelector: ".figure__caption"
+}
+
+export const profileConfig = {
+  titleSelector: ".profile__title",
+  subTitleSelector: ".profile__subtitle",
+  editButton: ".profile__btn-edit"
+}
+
+export const formConfig = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  onOpenEvent: "openEvent",
 }

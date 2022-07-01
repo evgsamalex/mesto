@@ -1,22 +1,23 @@
+
+import { cardConfig } from "./constants";
 export default class Card {
-  constructor(data, config, handleCardClick) {
+  constructor(data, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
-    this._config = config;
     this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
-    const template = document.querySelector(this._config.templateId).content.querySelector(this._config.card);
+    const template = document.querySelector(cardConfig.templateId).content.querySelector(cardConfig.card);
     return template.cloneNode(true);
   }
 
   generateCard() {
     this._element = this._getTemplate();
-    this._image = this._element.querySelector(this._config.image);
-    this._title = this._element.querySelector(this._config.title);
-    this._like = this._element.querySelector(this._config.like);
-    this._delete = this._element.querySelector(this._config.delete);
+    this._image = this._element.querySelector(cardConfig.image);
+    this._title = this._element.querySelector(cardConfig.title);
+    this._like = this._element.querySelector(cardConfig.like);
+    this._delete = this._element.querySelector(cardConfig.delete);
     this._fillElements();
     this._initSubscribtions();
     return this._element;
@@ -35,7 +36,7 @@ export default class Card {
   }
 
   _handleLike() {
-    this._like.classList.toggle(this._config.active);
+    this._like.classList.toggle(cardConfig.active);
   }
 
   _handleDelete() {
