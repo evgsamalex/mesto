@@ -82,3 +82,20 @@ export const validation = {
   errorClass: "form__input-error_active",
   onOpen: "openEvent",
 }
+
+export const popupConfig = {
+  openModifier: "popup_opened",
+  containerSelector: ".popup__container",
+  buttonCloseClass: "popup__button-close",
+}
+
+export const popupsConfig = {
+  profile: ".js-profile-popup",
+  cardDetails: ".js-card-details",
+  addCard: ".js-card-add",
+}
+
+export const imageConfig = {
+  imageSelector: ".figure__image",
+  captionSelector: ".figure__caption"
+}

@@ -1,9 +1,11 @@
 import '../pages/index.css';
 import { initialCards, classes, validation } from "./constants.js";
+import * as constants from "./constants.js";
 import Card from "./card.js";
 import FormValidator from "./FormValidator.js";
 import Section from './Section.js';
 import UserInfo from './UserInfo.js';
+import PopupWithImage from './PopupWithImage';
 
 
 const userInfo = new UserInfo(classes.profile);
@@ -17,10 +19,6 @@ const profileForm = document.querySelector(classes.profileForm.form);
 const profileFormValidator = new FormValidator(validation, profileForm);
 const nameInput = profileForm.querySelector(classes.profileForm.nameInput);
 const infoInput = profileForm.querySelector(classes.profileForm.infoInput);
-
-const cardDetailsPopup = createPopup(classes.popup.cardDetails);
-const cardDetailsImage = cardDetailsPopup.querySelector(classes.figure.image);
-const cardDetailsCaption = cardDetailsPopup.querySelector(classes.figure.caption);
 
 const cardPopupAdd = createPopup(classes.popup.addCard);
 
@@ -42,12 +40,6 @@ function createPopup(popupSelector) {
   return popup;
 }
 
-const keyHandler = (evt) => {
-  if (evt.key === 'Escape' && keyHandler.popup) {
-    closePopup(keyHandler.popup);
-  }
-}
-
 function openPopup(popup) {
   popup.classList.add(classes.popup.opened);
   keyHandler.popup = popup;
@@ -65,26 +57,20 @@ function loadProfileForm() {
   infoInput.value = info.subtitle;
 }
 
-function fillCardDetails(data) {
-  cardDetailsImage.src = data.link;
-  cardDetailsImage.alt = data.name;
-  cardDetailsCaption.textContent = data.name;
-}
-
 function raiseOpenForm(form) {
   const event = new CustomEvent(validation.onOpen);
   form.dispatchEvent(event);
 }
+
+const cardPopup = new PopupWithImage(constants.popupsConfig.cardDetails, constants);
+cardPopup.setEventListeners();
 
 const cardsSection = new Section(
   {
     items: initialCards,
     renderer: (data) => {
       const card = new Card(data, classes.card,
-        (data) => {
-          fillCardDetails(data);
-          openPopup(cardDetailsPopup);
-        });
+        (data) => cardPopup.open(data));
       return card.generateCard();
     }
   },

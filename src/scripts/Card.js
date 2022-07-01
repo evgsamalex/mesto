@@ -1,9 +1,9 @@
 export default class Card {
-  constructor(data, config, openHandler) {
+  constructor(data, config, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._config = config;
-    this._openHandler = openHandler;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -44,7 +44,7 @@ export default class Card {
   }
 
   _handleOpen() {
-    this._openHandler({ name: this._name, link: this._link });
+    this._handleCardClick({ name: this._name, link: this._link });
   }
 
   _dispose() {
