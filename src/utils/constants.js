@@ -28,6 +28,7 @@ export const initialCards = [
 export const pageConfig = {
   buttonAddSelector: ".profile__btn-add",
   buttonEditSelector: ".profile__btn-edit",
+  buttonAvatarSelector: ".profile__btn-avatar",
   cardsSelector: ".cards"
 }
 
@@ -62,11 +63,13 @@ export const popups = {
   profile: ".js-profile-popup",
   cardDetails: ".js-card-details",
   addCard: ".js-card-add",
+  avatar: ".js-avatar"
 }
 
 export const forms = {
   profileForm: ".profile-form",
-  cardForm: ".card-form"
+  cardForm: ".card-form",
+  avatarForm: ".avatar-form",
 }
 
 export const imageConfig = {
@@ -77,11 +80,19 @@ export const imageConfig = {
 export const profileConfig = {
   titleSelector: ".profile__title",
   subTitleSelector: ".profile__subtitle",
-  editButton: ".profile__btn-edit"
+  editButton: ".profile__btn-edit",
+  avatar: ".profile__avatar",
+  defaultAvatar: "https://pictures.s3.yandex.net/frontend-developer/common/ava.jpg"
 }
 
 export const formConfig = {
   formSelector: ".form",
   inputSelector: ".form__input",
   onOpenEvent: "openEvent",
+  submitSelector: ".form__submit",
+}
+
+export const apiConfig = {
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-45",
+  token: "1fd03e6b-d983-4cac-babc-2295aa34ef44"
 }
