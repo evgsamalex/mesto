@@ -2,6 +2,7 @@ const Methods = {
   POST: 'POST',
   PATCH: 'PATCH',
   DELETE: 'DELETE',
+  PUT: 'PUT',
 }
 
 export default class Api {
@@ -35,12 +36,22 @@ export default class Api {
       .then(this._readResponse);
   }
 
+  like(cardId, isLike) {
+    const method = isLike ? Methods.PUT : Methods.DELETE;
+
+    return this._send(`${this._baseUrl}/cards/likes/${cardId}`, method)
+      .then(this._readResponse);
+  }
+
+  deleteCard(cardId) {
+    return this._send(`${this._baseUrl}/cards/${cardId}`, 'DELETE')
+      .then(this._readResponse);
+  }
+
   _readResponse(response) {
     if (response.ok) {
       return response.json();
     }
-
-    response.text().then(text => console.error(text));
 
     return Promise.reject(`Error while sending request: ${response.status}`);
   }

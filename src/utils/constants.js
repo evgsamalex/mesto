@@ -14,6 +14,7 @@ export const cardConfig = {
   active: "button-icon_type_like-active",
   delete: ".card__delete",
   templateId: "#card-template",
+  likeCount: ".card__likecount",
 }
 
 export const validation = {
@@ -36,7 +37,8 @@ export const popups = {
   profile: ".js-profile-popup",
   cardDetails: ".js-card-details",
   addCard: ".js-card-add",
-  avatar: ".js-avatar"
+  avatar: ".js-avatar",
+  deleteCard: ".js-delete-card",
 }
 
 export const forms = {

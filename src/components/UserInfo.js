@@ -23,8 +23,13 @@ export default class UserInfo {
     this._avatar.src = url;
   }
 
+  getUserId() {
+    return this._userId;
+  }
+
   init(data) {
     this.setUserInfo(data);
     this.setAvatar(data.avatar);
+    this._userId = data.id;
   }
 }

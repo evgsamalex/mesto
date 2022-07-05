@@ -26,30 +26,70 @@ const avatarFormValidator = new FormValidator(validation, document.querySelector
 const cardPopup = new PopupWithImage(popups.cardDetails);
 cardPopup.setEventListeners();
 
+const handleError = (err) => console.log(err);
+
 const profilePopup = new PopupWithForm(popups.profile, ([name, about]) => {
-  return api.updateUserInfo({ name, about })
+  profilePopup.renderLoading(true);
+  api.updateUserInfo({ name, about })
     .then(data => userInfo.setUserInfo(data))
-    .then(profilePopup.close())
+    .catch(handleError)
+    .finally(() => {
+      profilePopup.renderLoading(false);
+      profilePopup.close();
+    })
 });
 profilePopup.setEventListeners();
 
 const addCardPopup = new PopupWithForm(popups.addCard, ([name, link]) => {
-  return api.addCard({ name, link })
+  addCardPopup.renderLoading(true);
+  api.addCard({ name, link })
     .then(data => cardsSection.insertItem(data))
-    .then(addCardPopup.close());
+    .catch(handleError)
+    .finally(() => {
+      addCardPopup.renderLoading(false);
+      addCardPopup.close();
+    })
 });
 addCardPopup.setEventListeners();
 
 const avatarPopup = new PopupWithForm(popups.avatar, ([link]) => {
-  return api.updateAvatar(link)
+  avatarPopup.renderLoading(true);
+  api.updateAvatar(link)
     .then(data => userInfo.setAvatar(data.avatar))
-    .then(() => avatarPopup.close())
+    .catch(handleError)
+    .finally(() => {
+      avatarPopup.renderLoading(false);
+      avatarPopup.close()
+    })
 });
 avatarPopup.setEventListeners();
 
+const deleteCardPopup = new PopupWithForm(popups.deleteCard, () => {
+  const card = deleteCardPopup.card;
+  if (!card) return;
+  api.deleteCard(card.getId())
+    .then(() => card.remove())
+    .catch(err => handleError(err))
+    .finally(() => deleteCardPopup.close())
+})
+deleteCardPopup.setEventListeners();
+
+const cardHandlers = {
+  open: (data) => cardPopup.open(data),
+  like: (card) => {
+    api.like(card.getId(), !card.getIsLike())
+      .then(data => card.refreshLikes(data.likes))
+      .catch(handleError)
+  },
+  delete: (card) => {
+    deleteCardPopup.card = card;
+    deleteCardPopup.open();
+  }
+}
+
 const cardsSection = new Section(
   (data) => {
-    const card = new Card(data, (data) => cardPopup.open(data));
+    const card = new Card(data, userInfo.getUserId(), cardHandlers);
     return card.generateCard();
   }
   ,
@@ -101,4 +141,4 @@ const loadUserInfo = () => {
     })
 }
 
-loadUserInfo().then(() => loadCards());
+loadUserInfo().then(() => loadCards()).catch(err => handleError(err));
