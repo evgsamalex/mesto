@@ -15,6 +15,11 @@ export default class Api {
       .then(this._readResponse);
   }
 
+  getInitialCards() {
+    return this._get(`${this._baseUrl}/cards`)
+      .then(this._readResponse);
+  }
+
   updateUserInfo({ name, about }) {
     return this._send(`${this._baseUrl}/users/me`, Methods.PATCH, { name, about })
       .then(this._readResponse);
@@ -22,6 +27,11 @@ export default class Api {
 
   updateAvatar(avatar) {
     return this._send(`${this._baseUrl}/users/me/avatar`, Methods.PATCH, { avatar })
+      .then(this._readResponse);
+  }
+
+  addCard({ name, link }) {
+    return this._send(`${this._baseUrl}/cards`, Methods.POST, { name, link })
       .then(this._readResponse);
   }
 

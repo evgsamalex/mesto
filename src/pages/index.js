@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { initialCards, validation, popups, forms, pageConfig, apiConfig } from "../utils/constants";
+import { validation, popups, forms, pageConfig, apiConfig } from "../utils/constants";
 import Card from '../components/Card';
 import FormValidator from '../components/FormValidator';
 import Section from '../components/Section';
@@ -34,8 +34,9 @@ const profilePopup = new PopupWithForm(popups.profile, ([name, about]) => {
 profilePopup.setEventListeners();
 
 const addCardPopup = new PopupWithForm(popups.addCard, ([name, link]) => {
-  cardsSection.addItem({ name, link });
-  addCardPopup.close();
+  return api.addCard({ name, link })
+    .then(data => cardsSection.insertItem(data))
+    .then(addCardPopup.close());
 });
 addCardPopup.setEventListeners();
 
@@ -47,13 +48,11 @@ const avatarPopup = new PopupWithForm(popups.avatar, ([link]) => {
 avatarPopup.setEventListeners();
 
 const cardsSection = new Section(
-  {
-    items: initialCards,
-    renderer: (data) => {
-      const card = new Card(data, (data) => cardPopup.open(data));
-      return card.generateCard();
-    }
-  },
+  (data) => {
+    const card = new Card(data, (data) => cardPopup.open(data));
+    return card.generateCard();
+  }
+  ,
   pageConfig.cardsSelector);
 
 const initSubscriptions = () => {
@@ -81,7 +80,14 @@ const initSubscriptions = () => {
 
 initSubscriptions();
 
-cardsSection.renderItems();
+const loadCards = () => {
+  api.getInitialCards()
+    .then(items => {
+      items.forEach(item => {
+        cardsSection.addItem(item)
+      })
+    });
+}
 
 const loadUserInfo = () => {
   return api.getUserInfo()
@@ -95,4 +101,4 @@ const loadUserInfo = () => {
     })
 }
 
-loadUserInfo();
+loadUserInfo().then(() => loadCards());
