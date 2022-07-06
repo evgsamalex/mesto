@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { validation, popups, forms, pageConfig, apiConfig } from "../utils/constants";
+import { validation, popups, forms, pageConfig, apiConfig, formConfig, popupConfig, imageConfig, profileConfig } from "../utils/constants";
 import Card from '../components/Card';
 import FormValidator from '../components/FormValidator';
 import Section from '../components/Section';
@@ -17,60 +17,68 @@ const api = new Api({
   }
 })
 
-const userInfo = new UserInfo();
+const userInfo = new UserInfo(profileConfig);
 
 const profileFormValidator = new FormValidator(validation, document.querySelector(forms.profileForm));
 const cardFormValidator = new FormValidator(validation, document.querySelector(forms.cardForm))
 const avatarFormValidator = new FormValidator(validation, document.querySelector(forms.avatarForm));
 
-const cardPopup = new PopupWithImage(popups.cardDetails);
+const cardPopup = new PopupWithImage(popupConfig, popups.cardDetails, imageConfig);
 cardPopup.setEventListeners();
 
 const handleError = (err) => console.log(err);
 
-const profilePopup = new PopupWithForm(popups.profile, ([name, about]) => {
+const profilePopup = new PopupWithForm(popupConfig, popups.profile, formConfig, ([name, about]) => {
   profilePopup.renderLoading(true);
   api.updateUserInfo({ name, about })
-    .then(data => userInfo.setUserInfo(data))
+    .then(data => {
+      userInfo.setUserInfo(data)
+      profilePopup.close();
+    })
     .catch(handleError)
     .finally(() => {
       profilePopup.renderLoading(false);
-      profilePopup.close();
     })
 });
 profilePopup.setEventListeners();
 
-const addCardPopup = new PopupWithForm(popups.addCard, ([name, link]) => {
+const addCardPopup = new PopupWithForm(popupConfig, popups.addCard, formConfig, ([name, link]) => {
   addCardPopup.renderLoading(true);
   api.addCard({ name, link })
-    .then(data => cardsSection.insertItem(data))
+    .then(data => {
+      cardsSection.insertItem(data)
+      addCardPopup.close();
+    })
     .catch(handleError)
     .finally(() => {
       addCardPopup.renderLoading(false);
-      addCardPopup.close();
     })
 });
 addCardPopup.setEventListeners();
 
-const avatarPopup = new PopupWithForm(popups.avatar, ([link]) => {
+const avatarPopup = new PopupWithForm(popupConfig, popups.avatar, formConfig, ([link]) => {
   avatarPopup.renderLoading(true);
   api.updateAvatar(link)
-    .then(data => userInfo.setAvatar(data.avatar))
+    .then(data => {
+      userInfo.setAvatar(data.avatar)
+      avatarPopup.close()
+    })
     .catch(handleError)
     .finally(() => {
       avatarPopup.renderLoading(false);
-      avatarPopup.close()
     })
 });
 avatarPopup.setEventListeners();
 
-const deleteCardPopup = new PopupWithForm(popups.deleteCard, () => {
+const deleteCardPopup = new PopupWithForm(popupConfig, popups.deleteCard, formConfig, () => {
   const card = deleteCardPopup.card;
   if (!card) return;
   api.deleteCard(card.getId())
-    .then(() => card.remove())
+    .then(() => {
+      card.remove()
+      deleteCardPopup.close()
+    })
     .catch(err => handleError(err))
-    .finally(() => deleteCardPopup.close())
 })
 deleteCardPopup.setEventListeners();
 
@@ -120,25 +128,11 @@ const initSubscriptions = () => {
 
 initSubscriptions();
 
-const loadCards = () => {
-  api.getInitialCards()
-    .then(items => {
-      items.forEach(item => {
-        cardsSection.addItem(item)
-      })
-    });
-}
-
-const loadUserInfo = () => {
-  return api.getUserInfo()
-    .then(data => {
-      userInfo.init({
-        id: data._id,
-        name: data.name,
-        about: data.about,
-        avatar: data.avatar
-      })
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([user, cards]) => {
+    userInfo.init({ id: user._id, name: user.name, about: user.about, avatar: user.avatar })
+    cards.forEach(item => {
+      cardsSection.addItem(item);
     })
-}
-
-loadUserInfo().then(() => loadCards()).catch(err => handleError(err));
+  })
+  .catch(err => handleError(err))

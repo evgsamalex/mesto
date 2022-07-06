@@ -1,15 +1,15 @@
-import { popupConfig as config } from "../../utils/constants";
 export default class Popup {
-  constructor(selector) {
+  constructor(config, selector) {
+    this._config = config;
     this._popup = document.querySelector(selector);
-    this._container = this._popup.querySelector(config.containerSelector);
-    this._openModifier = config.openModifier;
+    this._container = this._popup.querySelector(this._config.containerSelector);
+    this._openModifier = this._config.openModifier;
     this._handleEscCloseBind = this._handleEscClose.bind(this);
-    this._buttonCloseClass = config.buttonCloseClass;
+    this._buttonCloseClass = this._config.buttonCloseClass;
   }
 
   open() {
-    this._popup.classList.add("popup_opened");
+    this._popup.classList.add(this._config.openModifier);
     document.addEventListener('keyup', this._handleEscCloseBind);
   }
 
@@ -22,7 +22,7 @@ export default class Popup {
   }
 
   close() {
-    this._popup.classList.remove("popup_opened");
+    this._popup.classList.remove(this._config.openModifier);
     document.removeEventListener('keyup', this._handleEscCloseBind);
   }
 

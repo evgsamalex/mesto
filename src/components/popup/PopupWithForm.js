@@ -1,18 +1,18 @@
 import Popup from "./Popup";
-import { formConfig } from "../../utils/constants";
 
 export default class PopupWithForm extends Popup {
-  constructor(selector, submitHandler) {
-    super(selector)
+  constructor(popupConfig, selector, formConfig, submitHandler) {
+    super(popupConfig, selector)
     this._form = this._popup.querySelector(formConfig.formSelector);
     this._submitHandler = submitHandler;
     this._submitButton = this._form.querySelector(formConfig.submitSelector);
     this._submitButtonText = this._submitButton.textContent;
+    this._inputList = Array.from(this._form.querySelectorAll(formConfig.inputSelector));
+    this._onOpenEvent = formConfig.onOpenEvent;
   }
 
   _getInputValues() {
-    const elements = Array.from(this._getInputElements());
-    return elements.map(input => input.value);
+    return this._inputList.map(input => input.value);
   }
 
   setEventListeners() {
@@ -23,16 +23,10 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  _getInputElements() {
-    return this._form.querySelectorAll(".form__input");
-  }
-
   fillForm(data) {
-    const elements = Array.from(this._getInputElements());
-
     const dataValues = Object.values(data);
 
-    elements.forEach((item, index, elements) => {
+    this._inputList.forEach((item, index) => {
       if (dataValues[index]) {
         item.value = dataValues[index];
       }
@@ -40,7 +34,7 @@ export default class PopupWithForm extends Popup {
   }
 
   open() {
-    const event = new CustomEvent(formConfig.onOpenEvent);
+    const event = new CustomEvent(this._onOpenEvent);
     this._form.dispatchEvent(event);
     super.open();
   }
