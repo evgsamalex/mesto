@@ -6,7 +6,7 @@
 .content{flex:1}
 .header{border-bottom:1px solid rgba(54,54,54,.7);padding:45px 0 40px}@media screen and (max-width:600px){.header{padding:28px 0 32px}}
 .header__logo{background-image:url(c2821b381952624d90e5.svg);background-size:cover;height:33px;width:142px}@media screen and (max-width:600px){.header__logo{height:24.4px;margin-left:27px;width:103.74px}}
-.button-icon{background-color:transparent;background-position:50%;background-repeat:no-repeat;border:1px solid #fff;cursor:pointer;margin:0;padding:0;transition:opacity .3 ease}.button-icon:hover{opacity:.6}.button-icon:focus{outline:none}
+.button-icon{background-color:transparent;background-position:50%;background-repeat:no-repeat;border:1px solid #fff;cursor:pointer;margin:0;padding:0;transition:opacity .3s ease}.button-icon:hover{opacity:.6}.button-icon:focus{outline:none}
 .button-icon_type_add{background-image:url(bed8c136e13907f5eefb.svg);border-width:2px;height:50px;width:150px}@media screen and (max-width:600px){.button-icon_type_add{background-size:16px;width:100%}}
 .button-icon_type_edit{background-image:url(6c7bf05444b9793fdf6e.svg);height:24px;width:24px}@media screen and (max-width:600px){.button-icon_type_edit{height:18px;width:18px}}
 .button-icon_type_like{background-image:url(df0c965524717a3fd8e9.svg);background-size:contain;border:0;height:19px;margin:0;padding:0;width:24px}
